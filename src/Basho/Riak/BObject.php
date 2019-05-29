@@ -956,7 +956,7 @@ class BObject
      */
     public function getSiblingCount()
     {
-        return count($this->siblings);
+        return $this->siblings ? count($this->siblings): 0;
     }
 
     /**
