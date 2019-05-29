@@ -23,12 +23,12 @@ use Basho\Riak\Link;
 use Basho\Riak\MapReduce;
 
 /**
- * \Basho\Riak\Object
+ * \Basho\Riak\BObject
  *
  * @category   Basho
  * @author     Riak team (https://github.com/basho/riak-php-client/contributors)
  */
-class Object
+class BObject
 {
     /**
      * @var mixed
@@ -42,30 +42,30 @@ class Object
 
     /**
      * @var array Meta data store
-     * @see \Basho\Riak\Object::setMeta()
-     * @see \Basho\Riak\Object::getMeta()
-     * @see \Basho\Riak\Object::getAllMeta()
-     * @see \Basho\Riak\Object::removeMeta()
-     * @see \Basho\Riak\Object::removeAllMeta()
+     * @see \Basho\Riak\BObject::setMeta()
+     * @see \Basho\Riak\BObject::getMeta()
+     * @see \Basho\Riak\BObject::getAllMeta()
+     * @see \Basho\Riak\BObject::removeMeta()
+     * @see \Basho\Riak\BObject::removeAllMeta()
      */
     protected $meta = array();
 
     /**
      * @var array Array of indexes
-     * @see \Basho\Riak\Object::addIndex()
-     * @see \Basho\Riak\Object::setIndex()
-     * @see \Basho\Riak\Object::getIndex()
-     * @see \Basho\Riak\Object::removeIndex()
-     * @see \Basho\Riak\Object::removeAllIndexes()
+     * @see \Basho\Riak\BObject::addIndex()
+     * @see \Basho\Riak\BObject::setIndex()
+     * @see \Basho\Riak\BObject::getIndex()
+     * @see \Basho\Riak\BObject::removeIndex()
+     * @see \Basho\Riak\BObject::removeAllIndexes()
      */
     protected $indexes = array();
 
     /**
      * @var array Array of automatic indexes
-     * @see \Basho\Riak\Object::addAutoIndex()
-     * @see \Basho\Riak\Object::hasAutoIndex()
-     * @see \Basho\Riak\Object::removeAutoIndex()
-     * @see \Basho\Riak\Object::removeAllAutoIndexes()
+     * @see \Basho\Riak\BObject::addAutoIndex()
+     * @see \Basho\Riak\BObject::hasAutoIndex()
+     * @see \Basho\Riak\BObject::removeAutoIndex()
+     * @see \Basho\Riak\BObject::removeAllAutoIndexes()
      */
     protected $autoIndexes = array();
 
@@ -131,7 +131,7 @@ class Object
      *
      * @param mixed $data - The data to store.
      *
-     * @return Object
+     * @return BObject
      */
     public function setData($data)
     {
@@ -211,7 +211,7 @@ class Object
      * @param string $tag - Optional link tag. (default is bucket name,
      * ignored if $obj is a Link object.)
      *
-     * @return Object
+     * @return BObject
      */
     public function addLink($obj, $tag = null)
     {
@@ -966,7 +966,7 @@ class Object
      * @param  integer $r - R-Value. Wait until this many partitions
      * have responded before returning to client.
      *
-     * @return Object.
+     * @return BObject.
      */
     public function getSibling($i, $r = null)
     {
@@ -980,7 +980,7 @@ class Object
         $response = Utils::httpRequest('GET', $url);
 
         # Respond with a new object...
-        $obj = new Object($this->client, $this->bucket, $this->key);
+        $obj = new BObject($this->client, $this->bucket, $this->key);
         $obj->jsonize = $this->jsonize;
         $obj->populate($response, array(200));
 

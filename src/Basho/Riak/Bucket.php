@@ -164,13 +164,13 @@ class Bucket
      * Create a new Riak object that will be stored as JSON.
      *
      * @param  string $key - Name of the key. (default NULL)
-     * @param  object $data - The data to store. (default NULL)
+     * @param  BObject $data - The data to store. (default NULL)
      *
-     * @return Object
+     * @return BObject
      */
     public function newObject($key = null, $data = null)
     {
-        $obj = new Object($this->client, $this, $key);
+        $obj = new BObject($this->client, $this, $key);
         $obj->setData($data);
         $obj->setContentType('application/json');
         $obj->jsonize = true;
@@ -182,14 +182,14 @@ class Bucket
      * Create a new Riak object that will be stored as plain text/binary.
      *
      * @param  string $key - Name of the key. (default NULL)
-     * @param  object $data - The data to store.
+     * @param  BObject $data - The data to store.
      * @param  string $content_type - The content type of the object. (default 'application/json')
      *
-     * @return Object
+     * @return BObject
      */
     public function newBinary($key = null, $data, $content_type = 'application/json')
     {
-        $obj = new Object($this->client, $this, $key);
+        $obj = new BObject($this->client, $this, $key);
         $obj->setData($data);
         $obj->setContentType($content_type);
         $obj->jsonize = false;
@@ -203,11 +203,11 @@ class Bucket
      * @param  string $key - Name of the key.
      * @param  int $r   - R-Value of the request (defaults to bucket's R)
      *
-     * @return Object
+     * @return BObject
      */
     public function get($key, $r = null)
     {
-        $obj = new Object($this->client, $this, $key);
+        $obj = new BObject($this->client, $this, $key);
         $obj->jsonize = true;
 
         return $obj->reload($r);
@@ -219,11 +219,11 @@ class Bucket
      * @param  string $key - Name of the key.
      * @param  int $r   - R-Value of the request (defaults to bucket's R)
      *
-     * @return Object
+     * @return BObject
      */
     public function getBinary($key, $r = null)
     {
-        $obj = new Object($this->client, $this, $key);
+        $obj = new BObject($this->client, $this, $key);
         $obj->jsonize = false;
 
         return $obj->reload($r);
@@ -363,7 +363,7 @@ class Bucket
         $response = Utils::httpRequest('GET', $url);
 
         # Use a Object to interpret the response, we are just interested in the value.
-        $obj = new Object($this->client, $this, null);
+        $obj = new BObject($this->client, $this, null);
         $obj->populate($response, array(200));
         if (!$obj->exists()) {
             throw new Exception("Error getting bucket properties.");
@@ -390,7 +390,7 @@ class Bucket
         $response = Utils::httpRequest('GET', $url);
 
         # Use a Object to interpret the response, we are just interested in the value.
-        $obj = new Object($this->client, $this, null);
+        $obj = new BObject($this->client, $this, null);
         $obj->populate($response, array(200));
         if (!$obj->exists()) {
             throw new Exception("Error getting bucket properties.");
@@ -419,7 +419,7 @@ class Bucket
         $url = Utils::buildIndexPath($this->client, $this, "{$indexName}_{$indexType}", $startOrExact, $end, null);
         $response = Utils::httpRequest('GET', $url);
 
-        $obj = new Object($this->client, $this, null);
+        $obj = new BObject($this->client, $this, null);
 
         $obj->populate($response, array(200));
         if (!$obj->exists()) {
