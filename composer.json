@@ -1,5 +1,5 @@
 {
-    "name": "basho/riak",
+    "name": "ferrumz/riak",
     "description": "Official Riak PHP client for PHP 5.3",
     "keywords": ["riak", "client", "driver", "database", "nosql"],
     "homepage": "http://basho.com/riak/",
